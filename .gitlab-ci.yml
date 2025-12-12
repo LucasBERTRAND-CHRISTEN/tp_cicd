@@ -6,37 +6,26 @@ variables:
   WORKSPACE: "."
   APP_FOLDER: "$WORKSPACE/bug-tracker"
   APP_VERSION: "1.0.0"
-  TEST_IMAGE: "cypress/browsers:node-20-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1"
-  DOCKER_IMAGE: "docker:24.0"
-  DOCKER_DIND_SERVICE: "docker:24-dind"
-  DOCKER_DRIVER: "overlay2"
-  DOCKER_TLS_CERTDIR: "/certs"
+  NODE_IMAGE: "node:20"
+  DOCKER_IMAGE: "docker:latest"
+  DOCKER_DIND_SERVICE: "docker:dind"
   IMAGE_TAG_LATEST: "$DOCKER_USERNAME:latest"
-  IMAGE_TAG_VERSION: "$DOCKER_USERNAME:v$APP_VERSION-$CI_PIPELINE_IID"
+  IMAGE_TAG_VERSION: "$DOCKER_USERNAME:$APP_VERSION"
 
 # ===========================================
 # JOB 1 : Tests
 # ===========================================
 test:
   stage: test
-  image: $TEST_IMAGE
-  before_script:
-    - cd $APP_FOLDER
-    - npm ci
+  image: $NODE_IMAGE
   script:
-    - npm start &
-    - APP_PID=$!
-    - npx wait-on http://localhost:3000 --timeout 120000
+    # Installer les dépendances
+    - cd $APP_FOLDER
+    - npm install
+    # Lancer l'application
+    - npm start
+    # Lancer les tests
     - npm run test:ci
-    - kill $APP_PID || true
-  artifacts:
-    when: on_failure
-    paths:
-      - $APP_FOLDER/cypress/videos
-      - $APP_FOLDER/cypress/screenshots
-    expire_in: 1 week
-  rules:
-    - if: "$CI_COMMIT_BRANCH == 'main'"
 
 # ===========================================
 # JOB 2 : Build Docker
@@ -49,15 +38,17 @@ build:
   needs:
     - test
   before_script:
+    # Login au registry
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   script:
+    # Build de l'image
     - echo "Building Image..."
     - docker build -t $IMAGE_TAG_VERSION $APP_FOLDER
     - docker tag $IMAGE_TAG_LATEST $IMAGE_TAG_VERSION
+    # Push de l'image avec les tags appropriés
     - echo "Pushing Image..."
     - docker push $IMAGE_TAG_VERSION
     - docker push $IMAGE_TAG_LATEST
   after_script:
+    # Logout au registry
     - docker logout
-  rules:
-    - if: "$CI_COMMIT_BRANCH == 'main'"
