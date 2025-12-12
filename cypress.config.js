@@ -9,11 +9,11 @@ module.exports = defineConfig({
     viewportHeight: 800,
     video: true,
     screenshotOnRunFailure: true,
-    defaultCommandTimeout: 10000,
+    defaultCommandTimeout: 3000,
     requestTimeout: 10000,
     responseTimeout: 10000,
     retries: {
-      runMode: 2,
+      runMode: 1,
       openMode: 0
     }
   }
