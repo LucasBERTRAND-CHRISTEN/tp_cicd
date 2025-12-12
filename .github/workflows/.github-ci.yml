@@ -69,9 +69,7 @@ jobs:
         
     - name: Docker Build & Push
       run: |
-        IMAGE_TAG_VERSION="${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}"
-        IMAGE_TAG_LATEST="${{ github.actor }}/bug-tracker:latest"
-        docker build -t $IMAGE_TAG_VERSION ${{ env.APP_FOLDER }}
-        docker tag $IMAGE_TAG_VERSION $IMAGE_TAG_LATEST
-        docker push $IMAGE_TAG_VERSION
-        docker push $IMAGE_TAG_LATEST
+        docker build -t ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }} ${{ env.APP_FOLDER }}
+        docker tag ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }} ${{ github.actor }}/bug-tracker:latest
+        docker push ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}
+        docker push ${{ github.actor }}/bug-tracker:latest
