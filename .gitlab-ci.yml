@@ -24,6 +24,7 @@ test:
     - npm install
     # Lancer l'application
     - npm start &
+    - sleep 5
     # Lancer les tests
     - npm run test:ci
 
