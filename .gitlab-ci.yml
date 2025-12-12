@@ -23,7 +23,7 @@ test:
     - cd $APP_FOLDER
     - npm install
     # Lancer l'application
-    - npm start
+    - npm start &
     # Lancer les tests
     - npm run test:ci
 
