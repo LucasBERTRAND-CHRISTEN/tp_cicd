@@ -1,3 +1,7 @@
+# CICD
+.gitlab-ci.yml
+.github
+
 # Logs
 logs
 *.log
