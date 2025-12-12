@@ -7,7 +7,7 @@ variables:
   APP_FOLDER: "$WORKSPACE/bug-tracker"
   APP_URL: ""
   APP_VERSION: "1.0.0"
-  NODE_IMAGE: "node:20"
+  CYPRESS_IMAGE: "cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1"
   DOCKER_IMAGE: "docker:latest"
   DOCKER_DIND_SERVICE: "docker:dind"
   IMAGE_TAG_LATEST: "$DOCKER_USERNAME:latest"
@@ -18,7 +18,7 @@ variables:
 # ===========================================
 test:
   stage: test
-  image: $NODE_IMAGE
+  image: $CYPRESS_IMAGE
   script:
     # Installer les dépendances
     - cd $APP_FOLDER
