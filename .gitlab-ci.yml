@@ -10,8 +10,8 @@ variables:
   CYPRESS_IMAGE: "cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1"
   DOCKER_IMAGE: "docker:latest"
   DOCKER_DIND_SERVICE: "docker:dind"
-  IMAGE_TAG_LATEST: "$DOCKER_USERNAME:latest"
-  IMAGE_TAG_VERSION: "$DOCKER_USERNAME:$APP_VERSION"
+  IMAGE_TAG_LATEST: "$DOCKER_USERNAME/tp_cicd:latest"
+  IMAGE_TAG_VERSION: "$DOCKER_USERNAME/tp_cicd:$APP_VERSION"
 
 # ===========================================
 # JOB 1 : Tests
@@ -43,7 +43,7 @@ build:
     # Build de l'image
     - echo "Building Image..."
     - docker build -t $IMAGE_TAG_VERSION $APP_FOLDER
-    - docker tag $IMAGE_TAG_LATEST $IMAGE_TAG_VERSION
+    - docker tag $IMAGE_TAG_VERSION $IMAGE_TAG_LATEST
     # Push de l'image avec les tags appropriés
     - echo "Pushing Image..."
     - docker push $IMAGE_TAG_VERSION
