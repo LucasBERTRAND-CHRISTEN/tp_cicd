@@ -69,10 +69,12 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        
+
     - name: Docker Build & Push
-      run: |
-        docker build -t ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }} ${{ env.APP_FOLDER }}
-        docker tag ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }} ${{ github.actor }}/bug-tracker:latest
-        docker push ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}
-        docker push ${{ github.actor }}/bug-tracker:latest
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          '${{ github.actor }}/bug-tracker:latest'
+          '${{ github.actor }}/bug-tracker:$APP_VERSION'
