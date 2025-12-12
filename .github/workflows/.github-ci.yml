@@ -69,6 +69,10 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - id: lower-repo
+      name: Repository to lowercase
+      run: echo "repository=${{ github.actor }}" >> $GITHUB_OUTPUT
 
     - name: Docker Build & Push
       uses: docker/build-push-action@v5
@@ -76,5 +80,5 @@ jobs:
         context: .
         push: true
         tags: |
-          ghcr.io/${{ github.actor }}/bug-tracker:latest
-          ghcr.io/${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}
+          ghcr.io/${{ steps.lower-repo.outputs.repository }}/bug-tracker:latest
+          ghcr.io/${{ steps.lower-repo.outputs.repository }}/bug-tracker:${{ env.APP_VERSION }}
