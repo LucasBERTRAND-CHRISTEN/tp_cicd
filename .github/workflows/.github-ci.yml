@@ -11,7 +11,7 @@ permissions:
   packages: write
 
 env:
-  MY_APP_FOLDER: 'bug-tracker'
+  APP_FOLDER: '.'
   APP_VERSION: '1.0.0'
   NODE_VERSION: '20'
   DOCKER_IMAGE: 'docker:latest'
@@ -66,12 +66,12 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-
+        
     - name: Docker Build & Push
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: |
-          ${{ github.actor }}/bug-tracker:latest
-          ${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}
+      run: |
+        IMAGE_TAG_VERSION="${{ github.actor }}/bug-tracker:${{ env.APP_VERSION }}"
+        IMAGE_TAG_LATEST="${{ github.actor }}/bug-tracker:latest"
+        docker build -t $IMAGE_TAG_VERSION ${{ env.APP_FOLDER }}
+        docker tag $IMAGE_TAG_VERSION $IMAGE_TAG_LATEST
+        docker push $IMAGE_TAG_VERSION
+        docker push $IMAGE_TAG_LATEST
