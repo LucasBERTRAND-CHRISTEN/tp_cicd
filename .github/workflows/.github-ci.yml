@@ -25,10 +25,6 @@ jobs:
   # ===========================================
   test:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ${{ env.MY_APP_FOLDER }}
 
     steps:
       - name: Checkout code
@@ -38,7 +34,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: '${{ env.MY_APP_FOLDER }}/npm'
+          cache: '$npm'
 
       - name: Action Cypress
         uses: cypress-io/github-action@v6
