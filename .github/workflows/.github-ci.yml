@@ -16,8 +16,8 @@ env:
   NODE_VERSION: '20'
   DOCKER_IMAGE: 'docker:latest'
   DOCKER_DIND_SERVICE: 'docker:dind'
-  IMAGE_TAG_LATEST: '$DOCKER_USERNAME:latest'
-  IMAGE_TAG_VERSION: '$DOCKER_USERNAME:$APP_VERSION'
+  IMAGE_TAG_LATEST: '${{ env.DOCKER_USERNAME }}:latest'
+  IMAGE_TAG_VERSION: '${{ env.DOCKER_USERNAME }}:$APP_VERSION'
 
 jobs:
   # ===========================================
