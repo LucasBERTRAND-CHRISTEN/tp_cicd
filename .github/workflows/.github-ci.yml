@@ -11,13 +11,13 @@ permissions:
   packages: write
 
 env:
-  MY_APP_FOLDER: "bug-tracker"
-  APP_VERSION: "1.0.0"
-  NODE_VERSION: "20"
-  DOCKER_IMAGE: "docker:latest"
-  DOCKER_DIND_SERVICE: "docker:dind"
-  IMAGE_TAG_LATEST: "$DOCKER_USERNAME:latest"
-  IMAGE_TAG_VERSION: "$DOCKER_USERNAME:$APP_VERSION"
+  MY_APP_FOLDER: 'bug-tracker'
+  APP_VERSION: '1.0.0'
+  NODE_VERSION: '20'
+  DOCKER_IMAGE: 'docker:latest'
+  DOCKER_DIND_SERVICE: 'docker:dind'
+  IMAGE_TAG_LATEST: '$DOCKER_USERNAME:latest'
+  IMAGE_TAG_VERSION: '$DOCKER_USERNAME:$APP_VERSION'
 
 jobs:
   # ===========================================
@@ -37,8 +37,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          node-version: '20'
+          cache: '${{ env.MY_APP_FOLDER }}/npm'
 
       - name: Action Cypress
         uses: cypress-io/github-action@v6
