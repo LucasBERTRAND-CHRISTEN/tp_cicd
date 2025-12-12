@@ -76,5 +76,5 @@ jobs:
         context: .
         push: true
         tags: |
-          '${{ github.actor }}/bug-tracker:latest'
-          '${{ github.actor }}/bug-tracker:$APP_VERSION'
+          ${{ github.actor }}/bug-tracker:latest
+          ${{ github.actor }}/bug-tracker:$APP_VERSION
