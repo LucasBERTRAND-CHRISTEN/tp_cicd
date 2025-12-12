@@ -16,8 +16,6 @@ env:
   NODE_VERSION: '20'
   DOCKER_IMAGE: 'docker:latest'
   DOCKER_DIND_SERVICE: 'docker:dind'
-  IMAGE_TAG_LATEST: 'stellarion/bug-tracker:latest'
-  IMAGE_TAG_VERSION: 'stellarion/bug-tracker:$APP_VERSION'
 
 jobs:
   # ===========================================
@@ -75,5 +73,5 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ env.IMAGE_TAG_LATEST }}
-          ${{ env.IMAGE_TAG_VERSION }}
+          '${{ github.actor }}/bug-tracker:latest'
+          '${{ github.actor }}/bug-tracker:$APP_VERSION'
